@@ -11,7 +11,7 @@ import java.io.PrintStream;
  *
  * @author Zay
  */
-public class NamedNode extends Node {
+public class ContentNode extends Node {
     private String name;
     private String text;
     private String attributes;
@@ -22,7 +22,7 @@ public class NamedNode extends Node {
      * 
      * @param name name of the node
      */
-    public NamedNode(String name)
+    public ContentNode(String name)
     {
         this.name = name;
     }
@@ -33,7 +33,7 @@ public class NamedNode extends Node {
      * @param name          name of the nome
      * @param attributes    a string representing the attributes set on this node (should be a map of values in reality)
      */
-    public NamedNode(String name, String attributes)
+    public ContentNode(String name, String attributes)
     {
         this(name);
         /** this is really a map of values but treat as a flat string for now **/
@@ -47,7 +47,7 @@ public class NamedNode extends Node {
      * @param text          body text for the node
      * @param attributes    a string representing the attributes set on this node (should be a map of values in reality)
      */
-    public NamedNode(String name, String text, String attributes)
+    public ContentNode(String name, String text, String attributes)
     {
         this(name, attributes);
         this.text = text;
@@ -84,14 +84,14 @@ public class NamedNode extends Node {
         return name;
     }
 
-    private NamedNode firstChild()
+    private ContentNode firstChild()
     {
-        return firstChild instanceof NamedNode ? (NamedNode)firstChild : null;
+        return firstChild instanceof ContentNode ? (ContentNode)firstChild : null;
     }
             
-    private NamedNode nextSibling()
+    private ContentNode nextSibling()
     {
-        return nextSibling instanceof NamedNode ? (NamedNode)nextSibling : null;
+        return nextSibling instanceof ContentNode ? (ContentNode)nextSibling : null;
     }
 
     void dump(PrintStream out) {
@@ -110,12 +110,12 @@ public class NamedNode extends Node {
             out.print(text);
         }
         
-        NamedNode fc = firstChild();
+        ContentNode fc = firstChild();
         if (fc != null) {
             out.println();
             fc.dump(indent + "  ", out);
 
-            NamedNode tmp = fc;
+            ContentNode tmp = fc;
             while(tmp.nextSibling() != null)  {
                 tmp = tmp.nextSibling();
                 if (tmp == null)
@@ -131,10 +131,10 @@ public class NamedNode extends Node {
     public int countDescendents()
     {
         int descendants = 0;
-        NamedNode fc = firstChild();
+        ContentNode fc = firstChild();
         if (fc != null) {
 
-            NamedNode tmp = fc;
+            ContentNode tmp = fc;
             while(tmp.nextSibling() != null)  {
                 descendants++;
                 tmp = tmp.nextSibling();
